@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@theme {
+  --font-headline: "Newsreader", serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Space Grotesk", monospace;
+  --font-prose: "Manrope", sans-serif;
+}
+@plugin "daisyui" {
+  themes: sunset --default;
+}
+@import "./game.css";
+
+body {
+  @apply font-body;
+}
+
+.input {
+  @apply bg-base-300/30;
+}
+.input:focus,
+.input:focus-within {
+  @apply outline-none;
+}
+
+/* Apply this class to your existing line/div */
+.animate-conduit {
+  position: relative;
+  overflow: hidden;
+  /* background-color: #e2e8f0; Optional: ensure it has a base color */
+}
+
+.animate-conduit::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.6) 50%,
+    transparent 100%
+  );
+  animation: conduit-flow 1.5s infinite linear;
+}
+
+@keyframes conduit-flow {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}

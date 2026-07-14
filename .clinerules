@@ -1,0 +1,88 @@
+# Cline Rules for Dungeon Master Project
+
+## Type Management
+
+### Type Storage Location
+- All TypeScript types, interfaces, and type definitions should be stored in the `/types` directory
+- Use `/types/index.ts` as the main entry point for exporting types
+- Import types using the `@/types` alias (e.g., `import { GameFormValues } from '@/types'`)
+
+### Guidelines
+1. **Centralized Types**: Keep all shared types in the `/types` directory to maintain consistency across the codebase
+2. **Component-Specific Types**: If a type is only used within a single component and won't be reused, it can remain in the component file
+3. **Naming Conventions**: Use PascalCase for interface and type names (e.g., `GameFormValues`, `UserProfile`) but for file names use snake case game_form
+4. **Documentation**: Add JSDoc comments to complex types to explain their purpose
+5. **Organization**: As the project grows, consider organizing types into subdirectories (e.g., `/types/forms`, `/types/api`, `/types/models`)
+6. **Generic Model Functions**: Always read the models file db/models file and add a generic model function if possible
+
+## API Development
+
+### Field Naming Convention
+- **CRITICAL**: Form field names MUST match database table column names exactly
+- Do NOT use destructuring or field name transformations in API handlers
+- Use generic body parsing and pass data directly to database functions
+- This ensures consistency and reduces mapping errors
+
+### Backend Validation
+1. **Always use Yup validation** in backend API routes
+2. **Use `cast()` with `stripUnknown: true`** to remove unknown fields and type-cast values
+3. Create separate validation schemas for different operations:
+   - `createXSchema` - for POST operations (required fields)
+   - `updateXSchema` - for PUT/PATCH operations (optional fields)
+   - `deleteXSchema` - for DELETE operations (ID validation)
+4. Store all validation schemas in `/validators` directory
+
+### Example API Pattern
+```typescript
+// validators/game.ts
+export const createGameSchema = yup.object().shape({
+  setting: yup.string().trim().required('Game setting is required'),
+  summary: yup.string().trim().optional(),
+});
+
+// app/api/games/route.ts
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Validate and cast with stripUnknown
+    const validatedData = await createGameSchema.validate(body, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    const result = await insertItem(games, validatedData);
+    return NextResponse.json({ success: true, data: result[0] }, { status: 201 });
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return NextResponse.json({ success: false, errors: error.errors }, { status: 400 });
+    }
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+  }
+}
+```
+
+### Form Development
+- Form field names should match database column names exactly
+- Use the same validation schema structure for frontend and backend
+- Example:
+```typescript
+// types/index.ts - Field names match DB columns
+export interface GameFormValues {
+  setting: string;
+  summary?: string;
+}
+
+// app/components/game-form.tsx
+const formik = useFormik<GameFormValues>({
+  initialValues: {
+    setting: '',
+    summary: '',
+  },
+  validationSchema: gameFormSchema,
+  onSubmit: (values) => {
+    // Values can be sent directly to API without transformation
+    mutation.mutate(values);
+  },
+});
+```

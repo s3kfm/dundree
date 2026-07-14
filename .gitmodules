@@ -1,0 +1,3 @@
+[submodule "deepgram-agent"]
+	path = deepgram-agent
+	url = https://github.com/deepgram/dg_react_agent.git

@@ -1,0 +1,55 @@
+@layer components {
+  .campaign-card {
+    @apply bg-base-200 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col;
+  }
+
+  .campaign-title {
+    @apply text-xl font-headline font-bold text-base-content group-hover:text-primary transition-colors;
+  }
+
+  .campaign-description {
+    @apply text-base-content/60 text-sm mb-6 line-clamp-2;
+    @apply font-body;
+  }
+
+  .campaign-badge {
+    @apply px-3 py-1 rounded text-[10px] font-label font-bold uppercase tracking-widest;
+  }
+
+  .campaign-badge-created {
+    @apply bg-primary text-primary-content;
+  }
+
+  .campaign-badge-joined {
+    @apply bg-secondary text-secondary-content;
+  }
+
+  .campaign-button {
+    @apply flex items-center justify-center;
+    @apply w-full py-4 bg-base-300 border-t border-base-content/10 hover:bg-primary hover:text-primary-content transition-all font-label text-xs uppercase tracking-[0.2em] font-bold cursor-pointer;
+  }
+
+  .start-card {
+    @apply relative flex flex-col items-center justify-center p-8 rounded-xl border-2 border-dashed border-primary/20 bg-base-100 hover:bg-base-200 hover:border-primary/40 transition-all duration-300 min-h-[320px];
+  }
+
+  .section-header {
+    @apply text-3xl md:text-6xl font-label font-bold text-base-content tracking-tight mb-2;
+  }
+
+  .section-subheader {
+    @apply text-base-content/50 font-label uppercase tracking-widest text-xs;
+  }
+
+  .log-item {
+    @apply flex gap-4 items-start;
+  }
+
+  .log-dot {
+    @apply w-2 h-2 rounded-full mt-2;
+  }
+
+  .insight-card {
+    @apply bg-base-300 rounded-xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden;
+  }
+}
