@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { useDeepgramFlux } from "use-deepgram-flux";
+import { useDeepgramFlux } from "use-deepgram";
 
 interface InlineVoiceInputProps {
   token: string;
@@ -16,7 +16,7 @@ export default function InlineVoiceInput({
 }: InlineVoiceInputProps) {
   const { interimTranscript, connected, errored, listening, error } =
     useDeepgramFlux({
-      onError: () => {},
+      onError: () => { },
       token,
       onTurnEnd: async (transcript) => {
         const audio = new Audio("/sounds/speech-end.mp3");

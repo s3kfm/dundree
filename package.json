@@ -33,9 +33,9 @@
     "rsuite": "^6.1.2",
     "streamdown": "^2.5.0",
     "use-chat-on-chunk": "^0.0.5",
+    "use-deepgram": "^0.0.91",
     "uuid": "^13.0.0",
-    "yup": "^1.7.1",
-    "use-deepgram-flux": "file:///home/pugsy/Code/personal/use-deepgram-flux/use-deepgram-flux-0.0.9.tgz"
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
